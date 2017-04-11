@@ -11,7 +11,7 @@
         if ($scope.userId !== undefined)
         {
             toDoDropboxService.updateTasks([{
-                Userid: $scope.userId,
+                UserId: $scope.userId,
                 IsCompleted: false,
                 Name: "genTask"
             }]

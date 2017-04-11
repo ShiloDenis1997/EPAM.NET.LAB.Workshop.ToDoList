@@ -17,12 +17,12 @@ namespace todoclient.Controllers
 {
     public class ToDosDropboxController : ApiController
     {
-        public async Task<IList<DropboxViewModel>> Get(int userid)
+        public async Task<IList<DropboxViewModel>> Get(int userId)
         {
             string jsonResult;
             using (var dbx = new DropboxClient("h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi"))
             {
-                using (var response = await dbx.Files.DownloadAsync("/" + userid + ".txt"))
+                using (var response = await dbx.Files.DownloadAsync("/ToDoList/" + userId + ".txt"))
                 {
                     jsonResult = await response.GetContentAsStringAsync();
                 }
@@ -39,7 +39,7 @@ namespace todoclient.Controllers
                 using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(jsonData)))
                 {
                     await dbx.Files.UploadAsync(
-                        "/" + models[0].Userid + ".txt",
+                        "/ToDoList/" + models[0].UserId + ".txt",
                         WriteMode.Overwrite.Instance,
                         body: mem);
                 }
