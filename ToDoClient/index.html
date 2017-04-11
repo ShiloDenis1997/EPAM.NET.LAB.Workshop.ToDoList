@@ -40,7 +40,7 @@
                     {{task.Name}}
                 </td>
                 <td>
-                    <input type="button" class="delete-button" value="Delete" />
+                    <input type="button" ng-click="deleteTask(task.ToDoId)" class="delete-button" value="Delete" />
                 </td>
             </tr>
         </tbody>

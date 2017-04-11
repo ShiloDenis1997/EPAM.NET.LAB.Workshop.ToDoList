@@ -21,6 +21,14 @@
                 });
         }
 
+        $scope.deleteTask = function(taskId)
+        {
+            toDoService.deleteTask(taskId)
+                .then(function (response) {
+                    $scope.loadTasks();
+                });
+        }
+
         $scope.loadTasks = function()
         {
             toDoService.loadTasks()
