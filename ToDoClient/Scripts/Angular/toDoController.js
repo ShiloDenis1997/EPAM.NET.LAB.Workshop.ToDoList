@@ -1,5 +1,22 @@
 ﻿angular.module('toDoList').controller('toDoController', ['$scope', 'toDoService',
     function ($scope, toDoService) {
+        var dbx = new Dropbox({ accessToken: 'h3-3Vk5WbY8AAAAAAAAACYShHGUxPvzjeikvkxEzHSI89eUfRWrr_KPvi-pKMuoY' });
+        dbx.filesListFolder({ path: '' })
+          .then(function (response) {
+              console.log(response);
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+        dbx.filesDownload({ path: '/test.txt' })
+    .then(function (response) {
+        var blob = response.fileBlob;
+        var reader = new FileReader();
+        reader.addEventListener("loadend", function () {
+            console.log(reader.result);
+        });
+        reader.readAsText(blob);
+    })
         $scope.hello = 'hello';
         $scope.newCompleted = false;
         $scope.newName = '';
