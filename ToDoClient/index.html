@@ -15,8 +15,9 @@
     <script src="Scripts/Angular/services.js" language="javascript"></script>
     <script src="Scripts/Angular/toDoController.js" language="javascript"></script>
 </head>
-<body>
-    <!--<table id="tasks">
+<body ng-controller="toDoController">
+    {{hello}}
+    <table id="tasks">
         <thead>
             <tr>
                 <th>Completed</th>
@@ -27,12 +28,12 @@
             <tr id="new">
                 <td><input type='checkbox' id="newCompleted" /></td>
                 <td><input type='text' id="newName" /></td>
-                <td><input type='button' id="newCreate" value='Create' /></td>
+                <td><input ng-click="addClick()" type='button' id="newCreate" value='Create' /></td>
             </tr>
         </thead>
         <tbody>
 
         </tbody>
-    </table>-->
+    </table>
 </body>
 </html>
