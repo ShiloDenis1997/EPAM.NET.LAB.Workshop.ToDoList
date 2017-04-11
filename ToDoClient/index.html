@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
 
     <link rel="stylesheet" type="text/css" href="Styles/site.css">
+    <link rel="stylesheet" type="text/css" href="Content/bootstrap.css">
+
 
     <script src="Scripts/jquery-3.1.0.js" language="javascript"></script>
     <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
@@ -15,37 +17,54 @@
     <script src="Scripts/Angular/init.js" language="javascript"></script>
     <script src="Scripts/Angular/services.js" language="javascript"></script>
     <script src="Scripts/Angular/toDoController.js" language="javascript"></script>
-   
+
 </head>
 <body ng-controller="toDoController">
-    {{hello}}
-    <table id="tasks">
-        <thead>
-            <tr>
-                <th>Completed</th>
-                <th>Task</th>
-                <th>Actions</th>
-            </tr>
-             The row for creating new items.
-            <tr id="new">
-                <td><input ng-model="newCompeleted"type='checkbox' id="newCompleted" /></td>
-                <td><input ng-model="newName"type='text' id="newName" /></td>
-                <td><input ng-click="addClick()" type='button' id="newCreate" value='Create' /></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="task in tasks" data-id="{{task.ToDoId}}">
-                <td>
-                    <input type="checkbox" ng-click="updateTask()" ng-model="task.IsCompleted" />
-                </td>
-                <td class="name">
-                    {{task.Name}}
-                </td>
-                <td>
-                    <input type="button" ng-click="deleteTask($index)" class="delete-button" value="Delete" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div ng-if="showPreloader" class="container">
+        <div class="col-xs-5"></div>
+        <div class=" col-xs-4">
+            <div class="loader"></div>
+        </div>
+        <div class="col-xs-3"></div>
+    </div>
+
+
+    <br />
+    <div ng-show="!showPreloader" class="container">
+        <div class="col-lg-2 col-md-2 col-xs-2"></div>
+        <div class=" col-lg-8 col-md-8 col-xs-8">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="col-lg-3 col-md-3 col-xs-1"></div>
+                <div class="col-lg-8 col-md-8 col-xs-10">
+                    <div class="input-group row">
+                        <div class="col-lg-1 col-md-1 col-xs-1">
+                            <input ng-model="newCompeleted" type='checkbox' id="newCompleted" />
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-xs-6">
+                            <input placeholder="Type your task..." ng-model="newName" class="form-control" type='text' id="newName" />
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-4 pull-right">
+                            <input ng-click="addClick()" type='button' class="btn btn-primary" id="newCreate" value='Create' />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-xs-1"></div>
+            </div>
+            <div class="to-do-list">
+                <h2>To do list</h2>
+                <hr>
+                <ul>
+
+                    <li ng-repeat="task in tasks">
+                        <input id="{{$index}}" type="checkbox" ng-click="updateTask()" ng-model="task.IsCompleted">
+                        <label for="{{$index}}">{{task.Name}}</label>
+                        <span ng-click="deleteTask($index)" class="glyphicon glyphicon-trash pull-right" aria-hidden="true"></span>
+                        <hr>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-2"></div>
+    </div>
 </body>
 </html>

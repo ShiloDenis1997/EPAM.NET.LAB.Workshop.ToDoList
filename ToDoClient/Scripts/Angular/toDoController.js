@@ -4,7 +4,7 @@
         $scope.newCompleted = false;
         $scope.newName = '';
         $scope.tasks = [];
-
+        $scope.showPreloader = true;;
         $scope.userId = $cookies.get('user');
         console.log('user');
         console.log($scope.userId);
@@ -15,6 +15,7 @@
                     console.log('get from dropbox success');
                     $scope.tasks = response.data.ToDoItems;
                     console.log($scope.tasks);
+                    $scope.showPreloader = false;
                 }, function (response) {
                     console.log('get from dropbox failed');
                 });
@@ -62,6 +63,7 @@
                     //$scope.tasks = response.data;
                     $scope.synchronize(response.data);
                     console.log($scope.tasks);
+                    $scope.showPreloader = false;
                 });
         }
         
