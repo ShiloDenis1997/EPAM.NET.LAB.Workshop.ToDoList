@@ -5,12 +5,18 @@
         $scope.newName = '';
         $scope.data = [];
 
-        $scope.cookies = $cookies.get('user');
+        $scope.userId = $cookies.get('user');
         console.log('user');
-        console.log($scope.cookies);
-        if ($scope.cookies !== undefined)
+        console.log($scope.userId);
+        if ($scope.userId !== undefined)
         {
-            $scope.test = toDoDropboxService.loadTasks();
+            toDoDropboxService.updateTasks([{
+                Userid: $scope.userId,
+                IsCompleted: false,
+                Name: "genTask"
+            }]
+            );
+            $scope.test = toDoDropboxService.loadTasks($scope.userId);
         }
         //$scope.test = toDoDropboxService.loadTasks();
         console.log($scope.test);

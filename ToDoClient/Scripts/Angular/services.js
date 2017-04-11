@@ -32,11 +32,11 @@
             } 
 
             function loadTasks(userId) {
-                return $http.get("api/todosDropbox/" + userId);
+                return $http.get("api/todosDropbox?userid=" + userId);
             }
 
-            function updateTasks(userId, isCompleted, name) {
-                return $http.get("api/todosDropbox", { Userid: userId, IsCompleted: isCompleted, Name: name });
+            function updateTasks(tasks) {
+                return $http.put("api/todosDropbox", tasks);
             }
         }
     ]);

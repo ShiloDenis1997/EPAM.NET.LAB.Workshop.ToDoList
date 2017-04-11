@@ -22,7 +22,7 @@ namespace todoclient.Controllers
             string jsonResult;
             using (var dbx = new DropboxClient("h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi"))
             {
-                using (var response = await dbx.Files.DownloadAsync("ToDoList/" + userid))
+                using (var response = await dbx.Files.DownloadAsync("/" + userid + ".txt"))
                 {
                     jsonResult = await response.GetContentAsStringAsync();
                 }
@@ -31,15 +31,15 @@ namespace todoclient.Controllers
             return JsonConvert.DeserializeObject<IList<DropboxViewModel>>(jsonResult);
         }
 
-        public async Task Put(DropboxViewModel model) 
+        public async Task Put(IList<DropboxViewModel> models) 
         {
-            string jsonData = JsonConvert.SerializeObject(model);
+            string jsonData = JsonConvert.SerializeObject(models);
             using (var dbx = new DropboxClient("h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi"))
             {
                 using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(jsonData)))
                 {
                     await dbx.Files.UploadAsync(
-                        "ToDoList/" + model.Userid,
+                        "/" + models[0].Userid + ".txt",
                         WriteMode.Overwrite.Instance,
                         body: mem);
                 }
