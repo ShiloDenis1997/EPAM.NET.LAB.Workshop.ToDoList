@@ -16,7 +16,7 @@
             }
 
             function updateTask(id, isCompleted, name) {
-                return $http.put("api/todos", { ToDoId: id, IsCompleted: isCompleted, Name: name })
+                return $http.put("api/todos", { ToDoId: id, IsCompleted: isCompleted, Name: name });
             }
 
             function deleteTask(taskId) {
@@ -28,11 +28,15 @@
         '$http', function ($http) {
             return {
                 loadTasks: loadTasks,
-                //updateTasks: updateTasks
+                updateTasks: updateTasks
             }
 
             function loadTasks(userId) {
                 return $http.get("api/todosDropbox/" + userId);
+            }
+
+            function loadTasks(userId, content) {
+                return $http.get("api/todosDropbox", {userid: userId, content: content });
             }
         }
     ]);
