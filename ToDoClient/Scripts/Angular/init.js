@@ -1,1 +1,1 @@
-﻿angular.module('toDoList', ['ngRoute', 'gapi']);
+﻿angular.module('toDoList', ['ngRoute']);
