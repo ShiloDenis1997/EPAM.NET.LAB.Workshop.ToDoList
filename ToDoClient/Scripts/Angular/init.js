@@ -1,1 +1,1 @@
-﻿angular.module('toDoList', ['ngRoute']);
+﻿angular.module('toDoList', ['ngRoute', 'ngCookies']);
