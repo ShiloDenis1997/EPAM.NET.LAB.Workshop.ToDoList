@@ -12,7 +12,7 @@
         }
 
         function createTask(isCompleted, name) {
-            return $http.put("api/todos", { IsCompleted: isCompleted, Name: name });
+            return $http.post("api/todos", { IsCompleted: isCompleted, Name: name });
         }
 
         function updateTask(id, isCompleted, name) {
