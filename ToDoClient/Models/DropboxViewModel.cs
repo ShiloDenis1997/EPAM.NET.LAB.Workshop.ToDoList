@@ -7,8 +7,6 @@ namespace todoclient.Models
 {
     public class DropboxViewModel
     {
-        public int UserId { get; set; }
-
         public bool IsCompleted { get; set; }
 
         public string Name { get; set; }

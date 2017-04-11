@@ -17,7 +17,7 @@ namespace todoclient.Controllers
 {
     public class ToDosDropboxController : ApiController
     {
-        public async Task<IList<DropboxViewModel>> Get(int userId)
+        public async Task<DropboxViewModelsCollection> Get(int userId)
         {
             string jsonResult;
             using (var dbx = new DropboxClient("h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi"))
@@ -28,18 +28,18 @@ namespace todoclient.Controllers
                 }
             }
 
-            return JsonConvert.DeserializeObject<IList<DropboxViewModel>>(jsonResult);
+            return JsonConvert.DeserializeObject<DropboxViewModelsCollection>(jsonResult);
         }
 
-        public async Task Put(IList<DropboxViewModel> models) 
+        public async Task Put(DropboxViewModelsCollection modelsCollection) 
         {
-            string jsonData = JsonConvert.SerializeObject(models);
+            string jsonData = JsonConvert.SerializeObject(modelsCollection);
             using (var dbx = new DropboxClient("h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi"))
             {
                 using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(jsonData)))
                 {
                     await dbx.Files.UploadAsync(
-                        "/ToDoList/" + models[0].UserId + ".txt",
+                        "/ToDoList/" + modelsCollection.UserId + ".txt",
                         WriteMode.Overwrite.Instance,
                         body: mem);
                 }

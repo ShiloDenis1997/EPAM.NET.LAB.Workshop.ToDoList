@@ -3,57 +3,90 @@
         $scope.hello = 'hello';
         $scope.newCompleted = false;
         $scope.newName = '';
-        $scope.data = [];
+        $scope.tasks = [];
 
         $scope.userId = $cookies.get('user');
         console.log('user');
         console.log($scope.userId);
         if ($scope.userId !== undefined)
         {
-            toDoDropboxService.updateTasks([{
-                UserId: $scope.userId,
-                IsCompleted: false,
-                Name: "genTask"
-            }]
-            );
-            $scope.test = toDoDropboxService.loadTasks($scope.userId);
+            toDoDropboxService.loadTasks($scope.userId)
+                .then(function (response) {
+                    console.log('get from dropbox success');
+                    $scope.tasks = response.data.ToDoItems;
+                    console.log($scope.tasks);
+                }, function (response) {
+                    console.log('get from dropbox failed');
+                });
         }
         //$scope.test = toDoDropboxService.loadTasks();
         console.log($scope.test);
 
         $scope.addClick = function()
         {
+            $scope.tasks.push({
+                IsCompleted: $scope.newCompleted, Name: $scope.newName
+            });
+            toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
             toDoService.createTask($scope.newCompleted, $scope.newName)
                 .then(function () {
                     $scope.loadTasks();
                 });
         }
 
-        $scope.updateTask = function(taskId, isCompleted, name)
+        $scope.updateTask = function()
         {
-            toDoService.updateTask(taskId, isCompleted, name)
-                .then(function (response) {
-                    $scope.loadTasks();
-                });
+            toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
+            $scope.loadTasks();
+            //toDoService.updateTask(taskId, isCompleted, name)
+            //    .then(function (response) {
+            //        $scope.loadTasks();
+            //    });
         }
 
-        $scope.deleteTask = function(taskId)
+        $scope.deleteTask = function(index)
         {
-            toDoService.deleteTask(taskId)
-                .then(function (response) {
-                    $scope.loadTasks();
-                });
+            $scope.tasks.splice(index, 1);
+            toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
+            $scope.loadTasks();
+            //toDoService.deleteTask(taskId)
+            //    .then(function (response) {
+            //        $scope.loadTasks();
+            //    });
         }
 
         $scope.loadTasks = function()
         {
             toDoService.loadTasks()
-                .then(function (responce) {
-                    $scope.data = responce.data;
-                    console.log($scope.data);
+                .then(function (response) {
+                    //$scope.tasks = response.data;
+                    $scope.synchronize(response.data);
+                    console.log($scope.tasks);
                 });
         }
         
         //init tasks list
         $scope.loadTasks();
+
+        $scope.synchronize = function (cloudTasks) {
+            $scope.userId = $cookies.get('user');
+            for (var i = 0; i < cloudTasks.length; i++) {
+                for (var j = 0; j < $scope.tasks.length; j++) {
+                    if (cloudTasks[i].Name.replace(/\s+$/, '') === $scope.tasks[j].Name) {
+                        if (cloudTasks[i].IsCompleted !== $scope.tasks[j].IsCompleted) {
+                            toDoService.updateTask(
+                                cloudTasks[i].ToDoId, $scope.tasks[j].IsCompleted, $scope.tasks[j].Name);
+                        }
+                        break;
+                    }
+                }
+                if (j === $scope.tasks.length) {
+                    toDoService.deleteTask(cloudTasks[i].ToDoId);
+                }
+            }
+            console.log('scope tasks');
+            console.log($scope.tasks);
+            console.log('cloud tasks');
+            console.log(cloudTasks);
+        }
     }]);

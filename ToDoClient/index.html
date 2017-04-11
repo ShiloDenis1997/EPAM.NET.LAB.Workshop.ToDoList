@@ -28,21 +28,21 @@
             </tr>
              The row for creating new items.
             <tr id="new">
-                <td><input type='checkbox' id="newCompleted" /></td>
-                <td><input type='text' id="newName" /></td>
+                <td><input ng-model="newCompeleted"type='checkbox' id="newCompleted" /></td>
+                <td><input ng-model="newName"type='text' id="newName" /></td>
                 <td><input ng-click="addClick()" type='button' id="newCreate" value='Create' /></td>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="task in data" data-id="{{task.ToDoId}}">
+            <tr ng-repeat="task in tasks" data-id="{{task.ToDoId}}">
                 <td>
-                    <input type="checkbox" ng-click="updateTask(task.ToDoId, task.IsCompleted, task.Name)" ng-model="task.IsCompleted" />
+                    <input type="checkbox" ng-click="updateTask()" ng-model="task.IsCompleted" />
                 </td>
                 <td class="name">
                     {{task.Name}}
                 </td>
                 <td>
-                    <input type="button" ng-click="deleteTask(task.ToDoId)" class="delete-button" value="Delete" />
+                    <input type="button" ng-click="deleteTask($index)" class="delete-button" value="Delete" />
                 </td>
             </tr>
         </tbody>

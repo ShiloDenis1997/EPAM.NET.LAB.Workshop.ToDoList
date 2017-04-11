@@ -35,8 +35,8 @@
                 return $http.get("api/todosDropbox?userId=" + userId);
             }
 
-            function updateTasks(tasks) {
-                return $http.put("api/todosDropbox", tasks);
+            function updateTasks(tasks, userId) {
+                return $http.put("api/todosDropbox", { ToDoItems:tasks, UserId: userId});
             }
         }
     ]);
