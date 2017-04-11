@@ -32,7 +32,17 @@
             </tr>
         </thead>
         <tbody>
-
+            <tr ng-repeat="task in data" data-id="{{task.ToDoId}}">
+                <td>
+                    <input type="checkbox" ng-click="updateTask(task.ToDoId, task.IsCompleted, task.Name)" ng-model="task.IsCompleted" />
+                </td>
+                <td class="name">
+                    {{task.Name}}
+                </td>
+                <td>
+                    <input type="button" class="delete-button" value="Delete" />
+                </td>
+            </tr>
         </tbody>
     </table>
 </body>

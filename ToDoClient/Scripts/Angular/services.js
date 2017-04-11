@@ -3,7 +3,7 @@
         return {
             loadTasks: loadTasks,
             createTask: createTask,
-            updatTask: updateTask,
+            updateTask: updateTask,
             deleteTask: deleteTask
         }
 
