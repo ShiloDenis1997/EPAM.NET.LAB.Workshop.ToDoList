@@ -25,32 +25,14 @@
         }
     ])
     .service('toDoDropboxService', [
-        '$http', '$cookies', function ($http, $cookies) {
-
-            var data = {};
-            data.result = [];
-
+        '$http', function ($http) {
             return {
                 loadTasks: loadTasks,
                 //updateTasks: updateTasks
             }
 
-            function loadTasks() {
-                var dbx = new Dropbox({ accessToken: 'h3-3Vk5WbY8AAAAAAAAACYShHGUxPvzjeikvkxEzHSI89eUfRWrr_KPvi-pKMuoY' });
-                var result = [];
-                dbx.filesDownload({ path: '/test1.txt' })
-                .then(function (response) {
-                    var blob = response.fileBlob;
-                    var reader = new FileReader();
-                    
-                    reader.addEventListener("loadend", function () {
-                        //console.log(reader.result);
-                       result.push(reader.result);
-                    });
-                    reader.readAsText(blob);
-                });
-
-                return result;
+            function loadTasks(userId) {
+                return $http.get("api/todosDropbox/" + userId);
             }
         }
     ]);
