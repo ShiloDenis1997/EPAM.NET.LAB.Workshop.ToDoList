@@ -29,7 +29,7 @@
             return {
                 loadTasks: loadTasks,
                 updateTasks: updateTasks
-            }
+            } 
 
             function loadTasks(userId) {
                 return $http.get("api/todosDropbox/" + userId);
