@@ -35,7 +35,7 @@
                 return $http.get("api/todosDropbox/" + userId);
             }
 
-            function loadTasks(userId, content) {
+            function updateTasks(userId, content) {
                 return $http.get("api/todosDropbox", {userid: userId, content: content });
             }
         }
