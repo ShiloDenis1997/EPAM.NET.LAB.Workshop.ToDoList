@@ -1,10 +1,17 @@
-﻿angular.module('toDoList').controller('toDoController', ['$scope', '$cookie', 'toDoService', 'toDoDropboxService',
-    function ($scope, $cookie, toDoService, toDoDropboxService) {
+﻿angular.module('toDoList').controller('toDoController', ['$scope', '$cookies', 'toDoService', 'toDoDropboxService',
+    function ($scope, $cookies, toDoService, toDoDropboxService) {
         $scope.hello = 'hello';
         $scope.newCompleted = false;
         $scope.newName = '';
         $scope.data = [];
 
+        $scope.cookies = $cookies.get('user');
+        console.log('user');
+        console.log($scope.cookies);
+        if ($scope.cookies !== undefined)
+        {
+            $scope.test = toDoDropboxService.loadTasks();
+        }
         //$scope.test = toDoDropboxService.loadTasks();
         console.log($scope.test);
 
