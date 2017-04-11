@@ -92,6 +92,9 @@
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="index.html" />
+    <Content Include="Scripts\Angular\init.js" />
+    <Content Include="Scripts\Angular\services.js" />
+    <Content Include="Scripts\Angular\toDoController.js" />
     <Content Include="Scripts\gapi.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
