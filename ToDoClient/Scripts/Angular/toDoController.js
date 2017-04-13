@@ -1,6 +1,5 @@
 ﻿angular.module('toDoList').controller('toDoController', ['$scope', '$cookies', 'toDoService', 'toDoDropboxService',
     function ($scope, $cookies, toDoService, toDoDropboxService) {
-        $scope.hello = 'hello';
         $scope.newCompleted = false;
         $scope.newName = '';
         $scope.tasks = [];
@@ -33,6 +32,8 @@
                 .then(function () {
                     $scope.loadTasks();
                 });
+            $scope.newCompleted = false;
+            $scope.newName = '';
         }
 
         $scope.updateTask = function()
