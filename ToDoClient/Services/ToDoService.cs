@@ -91,6 +91,9 @@ namespace ToDoClient.Services
             result.EnsureSuccessStatusCode();
         }
 
+        /// <summary>
+        /// Disposes all resources
+        /// </summary>
         public void Dispose()
         {
             httpClient?.Dispose();

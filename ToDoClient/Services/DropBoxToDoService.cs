@@ -14,12 +14,26 @@ namespace ToDoClient.Services
 {
     public class DropBoxToDoService
     {
+        /// <summary>
+        /// Dropbox application api key
+        /// </summary>
         private static readonly string API_KEY = "h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi";
 
+        /// <summary>
+        /// Path to folder in dropbox where user data will be stored
+        /// </summary>
         private static readonly string folder = "/ToDoList/";
 
+        /// <summary>
+        /// Extension for files with user's data (needs only to simplify review of files on dropbox)
+        /// </summary>
         private static readonly string extension = ".txt";
 
+        /// <summary>
+        /// Gets all toDoItems of concrete user from dropbox
+        /// </summary>
+        /// <param name="userId">id of user</param>
+        /// <returns>All toDoItems of user with <paramref name="userId"/> </returns>
         public async Task<DropboxViewModelsCollection> GetAllTasksAsync(int userId)
         {
             string jsonResult;
@@ -34,6 +48,11 @@ namespace ToDoClient.Services
             return JsonConvert.DeserializeObject<DropboxViewModelsCollection>(jsonResult);
         }
 
+        /// <summary>
+        /// Puts all tasks to user's file on dropbox
+        /// </summary>
+        /// <param name="modelsCollection">Contains user's tasks and userId</param>
+        /// <returns></returns>
         public async Task PutAllTasksAsync(DropboxViewModelsCollection modelsCollection)
         {
             string jsonData = JsonConvert.SerializeObject(modelsCollection);
