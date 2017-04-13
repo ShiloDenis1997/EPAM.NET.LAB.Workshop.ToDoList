@@ -1,5 +1,5 @@
-﻿angular.module('toDoList').controller('toDoController', ['$scope', '$cookies', 'toDoService', 'toDoDropboxService',
-    function ($scope, $cookies, toDoService, toDoDropboxService) {
+﻿angular.module('toDoList').controller('toDoController', ['$scope', '$cookies', 'toDoService', 'toDoFastService',
+    function ($scope, $cookies, toDoService, toDoFastService) {
         $scope.newCompleted = false;
         $scope.newName = '';
         $scope.tasks = [];
@@ -9,14 +9,14 @@
         console.log($scope.userId);
         if ($scope.userId !== undefined)
         {
-            toDoDropboxService.loadTasks($scope.userId)
+            toDoFastService.loadTasks($scope.userId)
                 .then(function (response) {
-                    console.log('get from dropbox success');
+                    console.log('get from fast service success');
                     $scope.tasks = response.data.ToDoItems;
                     console.log($scope.tasks);
                     $scope.showPreloader = false;
                 }, function (response) {
-                    console.log('get from dropbox failed');
+                    console.log('get from fast service failed');
                 });
         }
         //$scope.test = toDoDropboxService.loadTasks();
@@ -29,7 +29,7 @@
             $scope.tasks.push({
                 IsCompleted: $scope.newCompleted, Name: nameToAdd
             });
-            toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
+            toDoFastService.updateTasks($scope.tasks, $scope.userId);
             toDoService.createTask($scope.newCompleted, nameToAdd)
                 .then(function () {
                     $scope.loadTasks();
@@ -55,14 +55,14 @@
 
         $scope.updateTask = function()
         {
-            toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
+            toDoFastService.updateTasks($scope.tasks, $scope.userId);
             $scope.loadTasks();
         }
 
         $scope.deleteTask = function(index)
         {
             $scope.tasks.splice(index, 1);
-            toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
+            toDoFastService.updateTasks($scope.tasks, $scope.userId);
             $scope.loadTasks();
         }
 

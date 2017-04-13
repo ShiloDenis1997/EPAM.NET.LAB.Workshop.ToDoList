@@ -24,7 +24,7 @@
             }
         }
     ])
-    .service('toDoDropboxService', [
+    .service('toDoFastService', [
         '$http', function ($http) {
             return {
                 loadTasks: loadTasks,

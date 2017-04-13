@@ -18,31 +18,31 @@ namespace ToDoClient.Controllers
 {
     public class ToDosFastStorageController : ApiController
     {
-        private readonly IItemsServiceAsync<FastStorageViewModelsCollection> dropboxToDoService;
+        private readonly IItemsServiceAsync<FastStorageViewModelsCollection> fastTasksService;
 
-        public ToDosFastStorageController(IItemsServiceAsync<FastStorageViewModelsCollection> dropBoxService)
+        public ToDosFastStorageController(IItemsServiceAsync<FastStorageViewModelsCollection> fastTasksService)
         {
-            dropboxToDoService = dropBoxService;
+            this.fastTasksService = fastTasksService;
         }
 
         /// <summary>
-        /// Gets all ToDos from dropbox
+        /// Gets all ToDos from fast storage
         /// </summary>
         /// <param name="userId">id of user</param>
         /// <returns>User's todos</returns>
         public async Task<FastStorageViewModelsCollection> Get(int userId)
         {
-            return await dropboxToDoService.GetAllItemsAsync(userId);
+            return await fastTasksService.GetAllItemsAsync(userId);
         }
 
         /// <summary>
-        /// Puts all tasks in dropbox
+        /// Puts all tasks in fast storage
         /// </summary>
         /// <param name="modelsCollection"></param>
         /// <returns></returns>
         public async Task Put(FastStorageViewModelsCollection modelsCollection)
         {
-            await dropboxToDoService.PutAllItemsAsync(modelsCollection);
+            await fastTasksService.PutAllItemsAsync(modelsCollection);
         }
     }
 }
