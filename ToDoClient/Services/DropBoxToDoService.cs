@@ -3,6 +3,7 @@ using Dropbox.Api.Files;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ToDoClient.Services
         /// <summary>
         /// Dropbox application api key
         /// </summary>
-        private static readonly string API_KEY = "h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi";
+        private static readonly string API_KEY = ConfigurationManager.AppSettings["DropBoxApiToken"];
 
         /// <summary>
         /// Path to folder in dropbox where user data will be stored
