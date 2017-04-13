@@ -24,11 +24,13 @@
 
         $scope.addClick = function()
         {
+            var nameToAdd = $scope.newName + 'guid:' + getGuid();
+
             $scope.tasks.push({
-                IsCompleted: $scope.newCompleted, Name: $scope.newName
+                IsCompleted: $scope.newCompleted, Name: nameToAdd
             });
             toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
-            toDoService.createTask($scope.newCompleted, $scope.newName)
+            toDoService.createTask($scope.newCompleted, nameToAdd)
                 .then(function () {
                     $scope.loadTasks();
                 });
@@ -36,14 +38,25 @@
             $scope.newName = '';
         }
 
+        function getGuid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                  .toString(16)
+                  .substring(1);
+            }
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+              s4() + '-' + s4() + s4() + s4();
+        }
+
+        $scope.trimGuid = function (taskWithGuid) {
+            var index = taskWithGuid.lastIndexOf('guid:');
+            return taskWithGuid.substring(0, index);
+        }
+
         $scope.updateTask = function()
         {
             toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
             $scope.loadTasks();
-            //toDoService.updateTask(taskId, isCompleted, name)
-            //    .then(function (response) {
-            //        $scope.loadTasks();
-            //    });
         }
 
         $scope.deleteTask = function(index)
@@ -51,17 +64,12 @@
             $scope.tasks.splice(index, 1);
             toDoDropboxService.updateTasks($scope.tasks, $scope.userId);
             $scope.loadTasks();
-            //toDoService.deleteTask(taskId)
-            //    .then(function (response) {
-            //        $scope.loadTasks();
-            //    });
         }
 
         $scope.loadTasks = function()
         {
             toDoService.loadTasks()
                 .then(function (response) {
-                    //$scope.tasks = response.data;
                     $scope.synchronize(response.data);
                     console.log($scope.tasks);
                     $scope.showPreloader = false;

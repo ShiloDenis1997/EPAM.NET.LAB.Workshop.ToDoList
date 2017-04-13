@@ -54,10 +54,9 @@
                 <h2>To do list</h2>
                 <hr>
                 <ul>
-
                     <li ng-repeat="task in tasks">
                         <input id="{{$index}}" type="checkbox" ng-click="updateTask()" ng-model="task.IsCompleted">
-                        <label for="{{$index}}">{{task.Name}}</label>
+                        <label for="{{$index}}">{{trimGuid(task.Name)}}</label>
                         <span ng-click="deleteTask($index)" class="glyphicon glyphicon-trash pull-right" aria-hidden="true"></span>
                         <hr>
                     </li>
