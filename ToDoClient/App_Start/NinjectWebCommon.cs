@@ -1,7 +1,7 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(todoclient.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(todoclient.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ToDoClient.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(ToDoClient.App_Start.NinjectWebCommon), "Stop")]
 
-namespace todoclient.App_Start
+namespace ToDoClient.App_Start
 {
     using System;
     using System.Web;
@@ -13,6 +13,8 @@ namespace todoclient.App_Start
     using Ninject.Web.WebApi;
     using System.Web.Http;
     using ToDoClient.Services;
+    using ToDoClient.Services.Interfaces;
+    using ToDoClient.Models;
 
     public static class NinjectWebCommon 
     {
@@ -65,7 +67,7 @@ namespace todoclient.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<DropBoxToDoService>().ToSelf().InRequestScope();
+            kernel.Bind<IItemsServiceAsync<FastStorageViewModelsCollection>>().To<DropBoxToDoService>().InRequestScope();
             kernel.Bind<ToDoService>().ToSelf().InRequestScope();
             kernel.Bind<UserService>().ToSelf().InRequestScope();
         }        

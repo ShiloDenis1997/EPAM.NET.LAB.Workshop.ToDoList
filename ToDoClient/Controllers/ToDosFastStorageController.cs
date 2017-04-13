@@ -10,17 +10,17 @@ using System.Web.Http;
 using Dropbox.Api;
 using Dropbox.Api.Files;
 using Newtonsoft.Json;
-using todoclient.Models;
 using ToDoClient.Models;
 using ToDoClient.Services;
+using ToDoClient.Services.Interfaces;
 
-namespace todoclient.Controllers
+namespace ToDoClient.Controllers
 {
-    public class ToDosDropboxController : ApiController
+    public class ToDosFastStorageController : ApiController
     {
-        private readonly DropBoxToDoService dropboxToDoService;
+        private readonly IItemsServiceAsync<FastStorageViewModelsCollection> dropboxToDoService;
 
-        public ToDosDropboxController(DropBoxToDoService dropBoxService)
+        public ToDosFastStorageController(IItemsServiceAsync<FastStorageViewModelsCollection> dropBoxService)
         {
             dropboxToDoService = dropBoxService;
         }
@@ -30,9 +30,9 @@ namespace todoclient.Controllers
         /// </summary>
         /// <param name="userId">id of user</param>
         /// <returns>User's todos</returns>
-        public async Task<DropboxViewModelsCollection> Get(int userId)
+        public async Task<FastStorageViewModelsCollection> Get(int userId)
         {
-            return await dropboxToDoService.GetAllTasksAsync(userId);
+            return await dropboxToDoService.GetAllItemsAsync(userId);
         }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace todoclient.Controllers
         /// </summary>
         /// <param name="modelsCollection"></param>
         /// <returns></returns>
-        public async Task Put(DropboxViewModelsCollection modelsCollection)
+        public async Task Put(FastStorageViewModelsCollection modelsCollection)
         {
-            await dropboxToDoService.PutAllTasksAsync(modelsCollection);
+            await dropboxToDoService.PutAllItemsAsync(modelsCollection);
         }
     }
 }

@@ -9,11 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using todoclient.Models;
+using ToDoClient.Models;
+using ToDoClient.Services.Interfaces;
 
 namespace ToDoClient.Services
 {
-    public class DropBoxToDoService
+    public class DropBoxToDoService : IItemsServiceAsync<FastStorageViewModelsCollection>
     {
         /// <summary>
         /// Dropbox application api key
@@ -35,7 +36,7 @@ namespace ToDoClient.Services
         /// </summary>
         /// <param name="userId">id of user</param>
         /// <returns>All toDoItems of user with <paramref name="userId"/> </returns>
-        public async Task<DropboxViewModelsCollection> GetAllTasksAsync(int userId)
+        public async Task<FastStorageViewModelsCollection> GetAllItemsAsync(int userId)
         {
             string jsonResult;
             using (var dbx = new DropboxClient(API_KEY))
@@ -46,7 +47,7 @@ namespace ToDoClient.Services
                 }
             }
 
-            return JsonConvert.DeserializeObject<DropboxViewModelsCollection>(jsonResult);
+            return JsonConvert.DeserializeObject<FastStorageViewModelsCollection>(jsonResult);
         }
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace ToDoClient.Services
         /// </summary>
         /// <param name="modelsCollection">Contains user's tasks and userId</param>
         /// <returns></returns>
-        public async Task PutAllTasksAsync(DropboxViewModelsCollection modelsCollection)
+        public async Task PutAllItemsAsync(FastStorageViewModelsCollection modelsCollection)
         {
             string jsonData = JsonConvert.SerializeObject(modelsCollection);
             using (var dbx = new DropboxClient(API_KEY))

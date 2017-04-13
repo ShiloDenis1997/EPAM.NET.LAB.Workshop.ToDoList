@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace todoclient.Models
+namespace ToDoClient.Models
 {
-    public class DropboxViewModel
+    public class FastStorageViewModel
     {
         /// <summary>
         /// Indicates if todo is completed
