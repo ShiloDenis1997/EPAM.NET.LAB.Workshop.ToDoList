@@ -12,39 +12,27 @@ using Dropbox.Api.Files;
 using Newtonsoft.Json;
 using todoclient.Models;
 using ToDoClient.Models;
+using ToDoClient.Services;
 
 namespace todoclient.Controllers
 {
     public class ToDosDropboxController : ApiController
     {
-        public async Task<DropboxViewModelsCollection> Get(int userId)
-        {
-            string jsonResult;
-            using (var dbx = new DropboxClient("h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi"))
-            {
-                using (var response = await dbx.Files.DownloadAsync("/ToDoList/" + userId + ".txt"))
-                {
-                    jsonResult = await response.GetContentAsStringAsync();
-                }
-            }
+        private readonly DropBoxToDoService dropboxToDoService;
 
-            return JsonConvert.DeserializeObject<DropboxViewModelsCollection>(jsonResult);
+        public ToDosDropboxController(DropBoxToDoService dropBoxService)
+        {
+            dropboxToDoService = dropBoxService;
         }
 
-        public async Task Put(DropboxViewModelsCollection modelsCollection) 
+        public async Task<DropboxViewModelsCollection> Get(int userId)
         {
-            string jsonData = JsonConvert.SerializeObject(modelsCollection);
-            using (var dbx = new DropboxClient("h3-3Vk5WbY8AAAAAAAAADqMwl-F4KwYp1ajgAaXJFjmozjGsrCvBRECOugqYBKsi"))
-            {
-                using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(jsonData)))
-                {
-                    await dbx.Files.UploadAsync(
-                        "/ToDoList/" + modelsCollection.UserId + ".txt",
-                        WriteMode.Overwrite.Instance,
-                        body: mem);
-                }
-                
-            }
+            return await dropboxToDoService.GetAllTasksAsync(userId);
+        }
+
+        public async Task Put(DropboxViewModelsCollection modelsCollection)
+        {
+            await dropboxToDoService.PutAllTasksAsync(modelsCollection);
         }
     }
 }

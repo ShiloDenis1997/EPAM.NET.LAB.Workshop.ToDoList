@@ -10,9 +10,14 @@ namespace ToDoClient.Controllers
     /// </summary>
     public class ToDosController : ApiController
     {
-        private readonly ToDoService todoService = new ToDoService();
-        private readonly UserService userService = new UserService();
+        private readonly ToDoService todoService;
+        private readonly UserService userService;
 
+        public ToDosController(ToDoService todoService, UserService userService)
+        {
+            this.todoService = todoService;
+            this.userService = userService;
+        }
         /// <summary>
         /// Returns all todo-items for the current user.
         /// </summary>
